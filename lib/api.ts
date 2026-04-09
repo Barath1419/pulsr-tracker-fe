@@ -24,6 +24,10 @@ async function request<T>(
     throw new Error(error.detail || "Request failed");
   }
 
+  if (res.status === 204 || res.headers.get("content-length") === "0") {
+    return undefined as T;
+  }
+
   return res.json();
 }
 
@@ -61,4 +65,35 @@ export async function createEntry(data: {
 
 export async function deleteEntry(id: string) {
   return request(`/entries/${id}`, { method: "DELETE" });
+}
+
+// Projects
+export async function getProjects() {
+  return request<import("@/types").Project[]>("/projects");
+}
+
+export async function createProject(data: {
+  name: string;
+  start_date: string;
+  end_date?: string | null;
+  notes?: string | null;
+}) {
+  return request<import("@/types").Project>("/projects", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateProject(
+  id: string,
+  data: Partial<{ name: string; start_date: string; end_date: string | null; notes: string | null }>
+) {
+  return request<import("@/types").Project>(`/projects/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteProject(id: string) {
+  return request(`/projects/${id}`, { method: "DELETE" });
 }
