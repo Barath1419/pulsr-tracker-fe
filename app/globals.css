@@ -5,6 +5,32 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Pulsr design tokens */
+  --color-p-surface: #0e0e0e;
+  --color-p-surface-container: #191a1a;
+  --color-p-surface-container-low: #131313;
+  --color-p-surface-container-high: #1f2020;
+  --color-p-surface-container-lowest: #000000;
+  --color-p-surface-container-highest: #252626;
+  --color-p-surface-bright: #2b2c2c;
+  --color-p-surface-variant: #252626;
+  --color-p-on-surface: #e7e5e5;
+  --color-p-on-surface-variant: #acabaa;
+  --color-p-primary: #c6c6c6;
+  --color-p-on-primary: #3f4041;
+  --color-p-primary-container: #454747;
+  --color-p-secondary: #91a390;
+  --color-p-secondary-container: #2f3f31;
+  --color-p-on-secondary: #142417;
+  --color-p-on-secondary-container: #b2c4b1;
+  --color-p-tertiary: #def0ff;
+  --color-p-outline: #767575;
+  --color-p-outline-variant: #484848;
+  --color-p-error: #ee7d77;
+  --color-p-error-dim: #bb5551;
+  --color-p-tertiary-dim: #bbd5e9;
+  --color-p-primary-fixed: #e2e2e2;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -117,6 +143,16 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Override browser autofill — keep dark theme intact */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #000000 inset !important; /* surface-container-lowest */
+  -webkit-text-fill-color: #e7e5e5 !important;                 /* on-surface */
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -126,5 +162,18 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(37, 38, 38, 0.8);
+    backdrop-filter: blur(20px);
+  }
+  .ghost-border {
+    border: 1px solid rgba(72, 72, 72, 0.15);
+  }
+  .ghost-border:focus-within {
+    border: 1px solid rgba(72, 72, 72, 0.4);
   }
 }
