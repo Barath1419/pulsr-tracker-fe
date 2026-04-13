@@ -242,7 +242,7 @@ export default function ProjectSelector({ entryData, categories, onSelect, onDis
       {/* Desktop: floating panel */}
       <div
         ref={ref}
-        className="hidden md:block absolute top-full left-0 mt-2 z-40 w-72 glass-panel rounded-xl shadow-[0_8px_32px_rgba(231,229,229,0.06)] animate-in fade-in slide-in-from-top-2 duration-200"
+        className="hidden md:block absolute top-full left-0 mt-2 z-40 w-80 glass-panel rounded-xl shadow-[0_8px_32px_rgba(231,229,229,0.06)] animate-in fade-in slide-in-from-top-2 duration-200"
       >
         <SelectorContent />
       </div>

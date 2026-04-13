@@ -184,6 +184,11 @@ export default function AppPage() {
             onParsed={handleParsed}
             loading={loading}
             date={dateString}
+            lastEndTime={
+              entries.length > 0
+                ? new Date(entries[entries.length - 1].end_time)
+                : undefined
+            }
           />
           {pendingData && (
             <ProjectSelector
