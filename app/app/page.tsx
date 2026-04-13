@@ -2,12 +2,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { getEntries, createEntry, deleteEntry } from "@/lib/api";
-import { Entry } from "@/types";
+import { getEntries, createEntry, deleteEntry, getCategories } from "@/lib/api";
+import { Entry, Category } from "@/types";
 import DayTabs from "@/components/app/DayTabs";
 import AppInputBar from "@/components/app/AppInputBar";
 import AppTimeline from "@/components/app/AppTimeline";
 import DailySummary from "@/components/app/DailySummary";
+import ProjectSelector from "@/components/app/ProjectSelector";
 
 type Day = "yesterday" | "today" | "tomorrow";
 
@@ -36,8 +37,8 @@ function formatDisplayDate(d: Date): string {
 
 const sideNavLinks = [
   { icon: "history_edu", label: "Journal", href: "/app", active: true },
-  { icon: "folder_open", label: "Projects", href: "/app/projects" },
-  { icon: "analytics", label: "Insights", href: "#" },
+  { icon: "analytics", label: "Insights", href: "/app/insights" },
+  { icon: "category", label: "Categories", href: "/app/categories" },
   { icon: "tune", label: "Settings", href: "#" },
 ];
 
@@ -47,6 +48,8 @@ export default function AppPage() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [fetching, setFetching] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [pendingData, setPendingData] = useState<{ start_time: string; end_time: string; title: string } | null>(null);
 
   const selectedDate = getDateForDay(selectedDay);
   const dateString = toDateString(selectedDate);
@@ -68,6 +71,7 @@ export default function AppPage() {
     const token = localStorage.getItem("token");
     if (!token) { router.push("/login"); return; }
     fetchEntries(dateString);
+    getCategories().then(setCategories).catch(() => {});
   }, [dateString, fetchEntries, router]);
 
   function handleDayChange(day: Day) {
@@ -75,10 +79,20 @@ export default function AppPage() {
     setEntries([]);
   }
 
-  async function handleSubmit(data: { start_time: string; end_time: string; title: string }) {
+  function handleParsed(data: { start_time: string; end_time: string; title: string }) {
+    setPendingData(data);
+  }
+
+  async function handleProjectSelected(
+    data: { start_time: string; end_time: string; title: string },
+    _categoryId: string | null,
+    projectId: string | null,
+    activityId: string | null
+  ) {
+    setPendingData(null);
     setLoading(true);
     try {
-      const entry = await createEntry(data);
+      const entry = await createEntry({ ...data, project_id: projectId, activity_id: activityId });
       setEntries((prev) =>
         [...prev, entry].sort((a, b) => a.start_time.localeCompare(b.start_time))
       );
@@ -87,6 +101,10 @@ export default function AppPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleDismissSelector() {
+    setPendingData(null);
   }
 
   async function handleDelete(id: string) {
@@ -99,9 +117,9 @@ export default function AppPage() {
   }
 
   return (
-    <div className="min-h-screen bg-p-background text-p-on-surface">
+    <div className="min-h-screen bg-p-surface text-p-on-surface">
       {/* Top Header */}
-      <header className="fixed top-0 w-full flex justify-between items-center px-8 h-16 bg-p-surface-variant/80 backdrop-blur-xl z-50 shadow-[0_24px_24px_rgba(231,229,229,0.06)]">
+      <header className="fixed top-0 w-full flex justify-between items-center px-8 h-16 glass-panel z-50 shadow-[0_8px_30px_rgba(231,229,229,0.06)]">
         <div className="flex items-center gap-8">
           <span className="text-2xl font-black tracking-tighter text-p-on-surface">Pulsr</span>
           <DayTabs selected={selectedDay} onChange={handleDayChange} />
@@ -130,11 +148,6 @@ export default function AppPage() {
             <p className="text-xs text-p-on-surface-variant mt-1">The Digital Curator</p>
           </div>
 
-          <button className="mx-2 bg-p-primary text-p-on-primary font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 active:translate-x-1 transition-transform cursor-pointer">
-            <span className="material-symbols-outlined">history_edu</span>
-            <span>New Entry</span>
-          </button>
-
           <nav className="flex flex-col gap-1 mt-4">
             {sideNavLinks.map((link) => (
               <a
@@ -142,7 +155,7 @@ export default function AppPage() {
                 href={link.href}
                 className={`flex items-center gap-3 px-4 py-3 transition-colors ${
                   link.active
-                    ? "text-p-primary font-semibold border-r-2 border-p-primary bg-p-surface-container-high"
+                    ? "text-p-primary font-semibold bg-p-surface-container-high"
                     : "text-p-on-surface-variant hover:text-p-on-surface hover:bg-p-surface-container-high"
                 }`}
               >
@@ -166,11 +179,21 @@ export default function AppPage() {
 
       {/* Main Content */}
       <main className="pt-24 lg:ml-64 px-6 md:px-12 pb-24">
-        <AppInputBar
-          onSubmit={handleSubmit}
-          loading={loading}
-          date={dateString}
-        />
+        <div className="max-w-4xl mx-auto mb-12 relative">
+          <AppInputBar
+            onParsed={handleParsed}
+            loading={loading}
+            date={dateString}
+          />
+          {pendingData && (
+            <ProjectSelector
+              entryData={pendingData}
+              categories={categories}
+              onSelect={handleProjectSelected}
+              onDismiss={handleDismissSelector}
+            />
+          )}
+        </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Timeline */}

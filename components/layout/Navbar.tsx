@@ -10,7 +10,7 @@ const navLinks = [
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 w-full z-50 bg-p-surface/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(231,229,229,0.06)]">
+    <nav className="fixed top-0 w-full z-50 glass-panel shadow-[0_8px_30px_rgba(231,229,229,0.06)]">
       <Container className="flex justify-between items-center h-20">
         {/* Logo */}
         <span className="text-xl font-bold tracking-tighter text-p-on-surface">

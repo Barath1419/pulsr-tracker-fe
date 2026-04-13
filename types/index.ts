@@ -3,6 +3,56 @@ export interface Entry {
   title: string;
   start_time: string;
   end_time: string;
+  project_id: string | null;
+  activity_id: string | null;
+  category: string | null;
+}
+
+export interface ProjectBreakdownItem {
+  name: string;
+  minutes: number;
+}
+
+export interface DailyInsights {
+  total_tracked: number;
+  untracked_minutes: number;
+  peak_window: string | null;
+  project_breakdown: ProjectBreakdownItem[];
+  category_breakdown: {
+    work: number;
+    personal_care: number;
+    breaks: number;
+    others: number;
+  };
+}
+
+export interface WeeklyInsights {
+  total_per_day: { day: string; minutes: number }[];
+  top_project: { name: string; total_minutes: number; change_percentage: number };
+  project_totals: ProjectBreakdownItem[];
+}
+
+export interface ActivityItem {
+  id: string;
+  name: string;
+  description: string | null;
+  type: string;
+  project_id: string | null;
+}
+
+export interface ProjectInCategory {
+  id: string;
+  name: string;
+  activities: ActivityItem[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  type: string;
+  created_at: string;
+  projects: ProjectInCategory[];
+  activities: ActivityItem[]; // direct (no project)
 }
 
 export interface User {

@@ -10,8 +10,8 @@ import ProjectModal from "@/components/app/ProjectModal";
 
 const sideNavLinks = [
   { icon: "history_edu", label: "Journal", href: "/app" },
-  { icon: "folder_open", label: "Projects", href: "/app/projects", active: true },
-  { icon: "analytics", label: "Insights", href: "#" },
+  { icon: "analytics", label: "Insights", href: "/app/insights" },
+  { icon: "category", label: "Categories", href: "/app/categories" },
   { icon: "tune", label: "Settings", href: "#" },
 ];
 
@@ -73,9 +73,9 @@ export default function ProjectsPage() {
   function openEdit(p: Project) { setEditingProject(p); setModalOpen(true); }
 
   return (
-    <div className="min-h-screen bg-p-background text-p-on-surface overflow-hidden">
+    <div className="min-h-screen bg-p-surface text-p-on-surface overflow-hidden">
       {/* Top Header */}
-      <header className="fixed top-0 w-full z-50 bg-p-surface-variant/80 backdrop-blur-xl shadow-[0_24px_24px_rgba(231,229,229,0.06)] h-16 flex justify-between items-center px-8">
+      <header className="fixed top-0 w-full z-50 glass-panel shadow-[0_8px_30px_rgba(231,229,229,0.06)] h-16 flex justify-between items-center px-8">
         <div className="flex items-center gap-8">
           <span className="text-xl font-bold text-p-on-surface tracking-tighter">Pulsr</span>
         </div>
@@ -107,16 +107,9 @@ export default function ProjectsPage() {
               <a
                 key={link.label}
                 href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 transition-colors rounded-lg ${
-                  link.active
-                    ? "text-p-on-surface font-bold bg-p-surface-container-high"
-                    : "text-p-on-surface-variant hover:text-p-on-surface hover:bg-p-surface-container-high/50"
-                }`}
+                className="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg text-p-on-surface-variant hover:text-p-on-surface hover:bg-p-surface-container-high/50"
               >
-                <span
-                  className="material-symbols-outlined text-[20px]"
-                  style={link.active ? { fontVariationSettings: "'FILL' 1" } : undefined}
-                >
+                <span className="material-symbols-outlined text-[20px]">
                   {link.icon}
                 </span>
                 <span className="text-[0.875rem]">{link.label}</span>

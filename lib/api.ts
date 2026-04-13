@@ -56,6 +56,9 @@ export async function createEntry(data: {
   title: string;
   start_time: string;
   end_time: string;
+  project_id?: string | null;
+  activity_id?: string | null;
+  category?: string | null;
 }) {
   return request<import("@/types").Entry>("/entries", {
     method: "POST",
@@ -65,6 +68,69 @@ export async function createEntry(data: {
 
 export async function deleteEntry(id: string) {
   return request(`/entries/${id}`, { method: "DELETE" });
+}
+
+// Categories
+export async function getCategories() {
+  return request<import("@/types").Category[]>("/categories");
+}
+
+export async function createCategory(data: { name: string; type?: string }) {
+  return request<import("@/types").Category>("/categories", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateCategory(id: string, data: { name?: string; type?: string }) {
+  return request<import("@/types").Category>(`/categories/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteCategory(id: string) {
+  return request(`/categories/${id}`, { method: "DELETE" });
+}
+
+// Activities
+export async function createActivity(data: {
+  name: string;
+  category_id: string;
+  project_id?: string | null;
+  description?: string | null;
+  type?: string;
+}) {
+  return request<import("@/types").ActivityItem>("/activities", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateActivity(id: string, data: { name?: string; description?: string | null; type?: string }) {
+  return request<import("@/types").ActivityItem>(`/activities/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteActivity(id: string) {
+  return request(`/activities/${id}`, { method: "DELETE" });
+}
+
+export async function getDailyInsights(date: string) {
+  return request<import("@/types").DailyInsights>(`/insights/daily?date=${date}`);
+}
+
+export async function getWeeklyInsights() {
+  return request<import("@/types").WeeklyInsights>(`/insights/weekly`);
+}
+
+export async function assignProject(entryId: string, projectId: string | null) {
+  return request<import("@/types").Entry>(`/entries/${entryId}/assign-project`, {
+    method: "PUT",
+    body: JSON.stringify({ project_id: projectId }),
+  });
 }
 
 // Projects
@@ -77,6 +143,7 @@ export async function createProject(data: {
   start_date: string;
   end_date?: string | null;
   notes?: string | null;
+  category_id?: string | null;
 }) {
   return request<import("@/types").Project>("/projects", {
     method: "POST",
@@ -86,7 +153,7 @@ export async function createProject(data: {
 
 export async function updateProject(
   id: string,
-  data: Partial<{ name: string; start_date: string; end_date: string | null; notes: string | null }>
+  data: Partial<{ name: string; start_date: string; end_date: string | null; notes: string | null; category_id: string | null }>
 ) {
   return request<import("@/types").Project>(`/projects/${id}`, {
     method: "PUT",

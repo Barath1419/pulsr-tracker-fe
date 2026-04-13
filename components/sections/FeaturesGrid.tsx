@@ -44,7 +44,7 @@ export default function FeaturesGrid() {
           {features.map((f) => (
             <div
               key={f.title}
-              className={`${f.span} ${f.bg} rounded-[1.5rem] p-10 flex flex-col justify-between border border-p-outline-variant/10`}
+              className={`${f.span} ${f.bg} rounded-[1.5rem] p-10 flex flex-col justify-between`}
             >
               <div>
                 <span className={`material-symbols-outlined text-4xl mb-6 ${f.iconColor}`}>
@@ -62,7 +62,7 @@ export default function FeaturesGrid() {
           ))}
 
           {/* Quote card */}
-          <div className="md:col-span-8 bg-p-surface-container-low rounded-[1.5rem] p-10 flex flex-col justify-center items-center text-center border border-p-outline-variant/10 relative overflow-hidden">
+          <div className="md:col-span-8 bg-p-surface-container-low rounded-[1.5rem] p-10 flex flex-col justify-center items-center text-center relative overflow-hidden">
             <div className="relative z-10">
               <h3 className="text-4xl font-bold tracking-tighter mb-4 italic text-p-on-surface">
                 No friction, just flow.

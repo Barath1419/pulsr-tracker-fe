@@ -12,7 +12,7 @@ const statusConfig: Record<
 > = {
   active: {
     label: "Active",
-    badge: "bg-p-secondary-container text-p-secondary-fixed-dim",
+    badge: "bg-p-secondary-container text-p-on-secondary-container",
     bar: "bg-p-tertiary-dim",
     accent: "bg-p-tertiary-dim",
   },

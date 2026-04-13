@@ -69,7 +69,7 @@ export default function ProjectModal({ open, project, onClose, onSave }: Props) 
   }
 
   const labelClass = "block text-[0.6875rem] uppercase tracking-[0.05em] font-medium text-p-on-surface-variant mb-1.5";
-  const inputClass = "w-full bg-p-surface-container-lowest border border-p-outline-variant/20 focus:border-p-outline-variant/50 rounded-xl px-4 py-3 text-sm text-p-on-surface outline-none transition-all";
+  const inputClass = "w-full bg-p-surface-container-lowest ghost-border rounded-xl px-4 py-3 text-sm text-p-on-surface outline-none transition-all";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
@@ -77,7 +77,7 @@ export default function ProjectModal({ open, project, onClose, onSave }: Props) 
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md bg-p-surface-container-high rounded-2xl p-8 shadow-2xl border border-p-outline-variant/10">
+      <div className="relative w-full max-w-md glass-panel rounded-2xl p-8 shadow-[0_24px_48px_rgba(231,229,229,0.06)]">
         <div className="mb-8">
           <h2 className="text-xl font-bold tracking-tight text-p-on-surface">
             {project ? "Edit Project" : "New Project"}

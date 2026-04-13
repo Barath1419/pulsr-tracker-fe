@@ -19,40 +19,33 @@ export function parseEntryForDate(
 }
 
 interface Props {
-  onSubmit: (data: { start_time: string; end_time: string; title: string }) => void;
+  onParsed: (data: { start_time: string; end_time: string; title: string }) => void;
   loading?: boolean;
   date: string;
 }
 
-export default function AppInputBar({ onSubmit, loading, date }: Props) {
+export default function AppInputBar({ onParsed, loading, date }: Props) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key !== "Enter" || !value.trim()) return;
+  function attempt() {
+    if (!value.trim()) return;
     const parsed = parseEntryForDate(value.trim(), date);
     if (!parsed) {
       setError('Format: "9-10 meeting" or "9 to 10 meeting"');
       return;
     }
     setError("");
-    onSubmit(parsed);
     setValue("");
+    onParsed(parsed);
   }
 
-  function handleAdd() {
-    const parsed = parseEntryForDate(value.trim(), date);
-    if (!parsed) {
-      setError('Format: "9-10 meeting" or "9 to 10 meeting"');
-      return;
-    }
-    setError("");
-    onSubmit(parsed);
-    setValue("");
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") attempt();
   }
 
   return (
-    <div className="max-w-4xl mx-auto mb-12">
+    <div>
       <div className="relative group">
         <div className="absolute inset-0 bg-p-primary/5 blur-xl rounded-full opacity-0 group-focus-within:opacity-100 transition-opacity" />
         <div className="relative flex items-center bg-p-surface-container-lowest border border-p-outline-variant/15 rounded-xl p-1 transition-all focus-within:border-p-outline-variant/40 focus-within:bg-p-surface-container-low shadow-sm">
@@ -69,7 +62,7 @@ export default function AppInputBar({ onSubmit, loading, date }: Props) {
           />
           <div className="flex items-center gap-2 pr-2">
             <button
-              onClick={handleAdd}
+              onClick={attempt}
               disabled={loading}
               className="bg-p-primary text-p-on-primary w-12 h-12 rounded-lg flex items-center justify-center hover:shadow-lg transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
             >

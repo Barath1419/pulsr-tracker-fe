@@ -9,7 +9,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-p-surface w-full py-12 border-t border-p-outline-variant/15">
+    <footer className="bg-p-surface w-full py-12">
       <Container className="flex flex-col md:flex-row justify-between items-center gap-6">
         <span className="text-[0.6875rem] uppercase tracking-[0.05em] text-p-on-surface-variant">
           © {new Date().getFullYear()} Pulsr. The Digital Curator.

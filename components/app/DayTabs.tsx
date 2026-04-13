@@ -20,7 +20,7 @@ export default function DayTabs({ selected, onChange }: Props) {
           onClick={() => onChange(tab.key)}
           className={`text-sm tracking-tight transition-colors ${
             selected === tab.key
-              ? "text-p-primary font-bold border-b-2 border-p-primary pb-1"
+              ? "text-p-primary font-bold"
               : "text-p-on-surface-variant hover:text-p-on-surface font-normal"
           }`}
         >
