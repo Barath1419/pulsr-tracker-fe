@@ -32,6 +32,13 @@ async function request<T>(
 }
 
 // Auth
+export async function googleSignIn(idToken: string) {
+  return request<{ access_token: string; token_type: string }>("/auth/google", {
+    method: "POST",
+    body: JSON.stringify({ id_token: idToken }),
+  });
+}
+
 export async function signup(email: string, password: string) {
   return request("/auth/signup", {
     method: "POST",
