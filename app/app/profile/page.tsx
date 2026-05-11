@@ -185,13 +185,18 @@ export default function ProfilePage() {
 
         {/* Identity */}
         <section className="flex items-end gap-8">
-          <div className="w-32 h-32 rounded-full bg-p-surface-container-high flex items-center justify-center text-4xl font-extrabold text-p-on-surface ring-4 ring-p-surface-container-low flex-shrink-0">
-            {profile.avatar_url ? (
-              <img src={profile.avatar_url} alt={displayName} className="w-full h-full rounded-full object-cover" />
-            ) : (
-              initials
-            )}
-          </div>
+          <Link href="/app/profile/avatar" className="relative group flex-shrink-0">
+            <div className="w-32 h-32 rounded-full bg-p-surface-container-high flex items-center justify-center text-4xl font-extrabold text-p-on-surface ring-4 ring-p-surface-container-low overflow-hidden">
+              {profile.avatar_url ? (
+                <img src={profile.avatar_url} alt={displayName} className="w-full h-full object-cover" />
+              ) : (
+                initials
+              )}
+            </div>
+            <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="material-symbols-outlined text-white text-xl">photo_camera</span>
+            </div>
+          </Link>
           <div className="space-y-2">
             {editName ? (
               <div className="flex items-center gap-3">
