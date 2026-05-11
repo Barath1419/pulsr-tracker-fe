@@ -193,7 +193,7 @@ export default function AppPage() {
       </main>
 
       {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 w-full flex justify-around items-center bg-p-surface-variant/90 backdrop-blur-xl h-20 px-4 border-t border-p-outline-variant/10 z-50">
+      <nav className="lg:hidden fixed bottom-0 w-full flex justify-around items-center bg-p-surface-variant/90 backdrop-blur-xl h-20 px-4 border-t border-p-outline-variant/10 z-50">
         <button className="flex flex-col items-center gap-1 text-p-primary">
           <span className="material-symbols-outlined">history_edu</span>
           <span className="text-[10px] font-bold">Journal</span>

@@ -162,7 +162,7 @@ export default function AvatarPage() {
         </main>
 
         {/* Mobile Bottom Nav */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-p-surface-container-highest/80 backdrop-blur-xl flex justify-around items-center px-4 z-50">
+        <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-p-surface-container-highest/80 backdrop-blur-xl flex justify-around items-center px-4 z-50">
           <Link href="/app"><span className="material-symbols-outlined text-p-on-surface-variant">history_edu</span></Link>
           <Link href="/app/insights"><span className="material-symbols-outlined text-p-on-surface-variant">analytics</span></Link>
           <Link href="/app/profile"><span className="material-symbols-outlined text-p-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>person</span></Link>

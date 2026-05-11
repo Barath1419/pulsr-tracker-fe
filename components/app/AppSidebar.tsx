@@ -22,7 +22,7 @@ export default function AppSidebar({ title = "Pulsr", subtitle = "The Digital Cu
   }
 
   return (
-    <aside className="hidden lg:flex flex-col fixed left-0 top-0 h-full py-8 px-4 bg-p-surface-container-low w-64 z-40 mt-16">
+    <aside className="hidden lg:flex flex-col fixed left-0 top-16 h-[calc(100vh-4rem)] py-8 px-4 bg-p-surface-container-low w-64 z-40">
       <div className="flex flex-col gap-6 h-full">
         <div className="px-4 py-2">
           <h3 className="text-xl font-bold text-p-on-surface tracking-tight">{title}</h3>

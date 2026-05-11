@@ -429,7 +429,7 @@ export default function ProfilePage() {
       </main>
 
       {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 w-full flex justify-around items-center bg-p-surface-variant/90 backdrop-blur-xl h-20 px-4 border-t border-p-outline-variant/10 z-50">
+      <nav className="lg:hidden fixed bottom-0 w-full flex justify-around items-center bg-p-surface-variant/90 backdrop-blur-xl h-20 px-4 border-t border-p-outline-variant/10 z-50">
         <Link href="/app" className="flex flex-col items-center gap-1 text-p-on-surface-variant">
           <span className="material-symbols-outlined">history_edu</span>
           <span className="text-[10px]">Journal</span>
