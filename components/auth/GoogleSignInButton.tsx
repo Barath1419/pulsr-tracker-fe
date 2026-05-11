@@ -44,11 +44,12 @@ export default function GoogleSignInButton({ onError }: Props) {
         },
       });
       window.google.accounts.id.renderButton(btnRef.current!, {
-        theme: "filled_black",
+        theme: "outline",
         size: "large",
         shape: "rectangular",
         width: btnRef.current!.offsetWidth || 360,
         text: "continue_with",
+        logo_alignment: "left",
       });
     }
 
