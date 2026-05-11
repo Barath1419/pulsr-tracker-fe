@@ -171,3 +171,66 @@ export async function updateProject(
 export async function deleteProject(id: string) {
   return request(`/projects/${id}`, { method: "DELETE" });
 }
+
+// Profile
+export async function getProfile() {
+  return request<import("@/types").UserProfile>("/profile");
+}
+
+export async function updateProfile(data: { name?: string; avatar_url?: string }) {
+  return request<import("@/types").UserProfile>("/profile", {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteAccount() {
+  return request("/profile", { method: "DELETE" });
+}
+
+// Goals
+export async function getGoals() {
+  return request<import("@/types").Goal[]>("/goals");
+}
+
+export async function createGoal(data: {
+  name: string;
+  target_minutes: number;
+  current_minutes?: number;
+  period?: string;
+  color?: string | null;
+}) {
+  return request<import("@/types").Goal>("/goals", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateGoal(id: string, data: {
+  name?: string;
+  target_minutes?: number;
+  current_minutes?: number;
+  period?: string;
+  color?: string | null;
+}) {
+  return request<import("@/types").Goal>(`/goals/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteGoal(id: string) {
+  return request(`/goals/${id}`, { method: "DELETE" });
+}
+
+// Reflections
+export async function getReflections() {
+  return request<import("@/types").Reflection[]>("/reflections");
+}
+
+export async function upsertReflection(data: { date: string; content: string }) {
+  return request<import("@/types").Reflection>("/reflections", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}

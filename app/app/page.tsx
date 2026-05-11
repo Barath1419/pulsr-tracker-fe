@@ -39,6 +39,7 @@ const sideNavLinks = [
   { icon: "history_edu", label: "Journal", href: "/app", active: true },
   { icon: "analytics", label: "Insights", href: "/app/insights" },
   { icon: "category", label: "Categories", href: "/app/categories" },
+  { icon: "account_circle", label: "Profile", href: "/app/profile" },
   { icon: "tune", label: "Settings", href: "#" },
 ];
 

@@ -61,6 +61,40 @@ export interface User {
   created_at: string;
 }
 
+export interface Goal {
+  id: string;
+  name: string;
+  target_minutes: number;
+  current_minutes: number;
+  period: string;
+  color: string | null;
+  created_at: string;
+}
+
+export interface Reflection {
+  id: string;
+  date: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  name: string | null;
+  avatar_url: string | null;
+  avg_daily_minutes: number;
+  top_category: string;
+  most_used_project: string;
+  current_streak: number;
+  best_streak: number;
+  productivity_insight: string;
+  consistency_insight: string;
+  goals: Goal[];
+  recent_reflections: Reflection[];
+}
+
 export interface AuthResponse {
   access_token: string;
   token_type: string;
