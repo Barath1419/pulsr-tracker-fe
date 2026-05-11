@@ -9,8 +9,9 @@ interface Props {
 }
 
 function getMinutes(iso: string): number {
-  const d = new Date(iso);
-  return d.getHours() * 60 + d.getMinutes();
+  const m = iso.match(/T(\d{2}):(\d{2})/);
+  if (!m) return 0;
+  return parseInt(m[1]) * 60 + parseInt(m[2]);
 }
 
 function formatDuration(minutes: number): string {

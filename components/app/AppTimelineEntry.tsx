@@ -13,12 +13,13 @@ const colors = [
 ];
 
 function formatTime(iso: string): string {
-  const d = new Date(iso);
-  return d.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
+  const m = iso.match(/T(\d{2}):(\d{2})/);
+  if (!m) return "";
+  const h = parseInt(m[1]);
+  const min = m[2];
+  const period = h >= 12 ? "PM" : "AM";
+  const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return `${h12}:${min} ${period}`;
 }
 
 function getDuration(start: string, end: string): string {
@@ -38,6 +39,10 @@ export default function AppTimelineEntry({ entry, colorIndex, onDelete }: Props)
   const endLabel = formatTime(entry.end_time);
   const duration = getDuration(entry.start_time, entry.end_time);
 
+  const colonIdx = entry.title.indexOf(" : ");
+  const mainTitle = colonIdx !== -1 ? entry.title.slice(0, colonIdx) : entry.title;
+  const subDetail = colonIdx !== -1 ? entry.title.slice(colonIdx + 3) : null;
+
   return (
     <div className="relative min-h-[5rem] flex items-start">
       <span className="w-16 shrink-0 text-right pr-6 text-xs font-bold text-p-on-surface-variant pt-1">
@@ -49,16 +54,21 @@ export default function AppTimelineEntry({ entry, colorIndex, onDelete }: Props)
         >
           <div className="p-4 flex-1">
             <div className="flex items-start justify-between mb-1">
-              <h4 className={`font-bold ${color.text}`}>{entry.title}</h4>
+              <div className="flex flex-col">
+                <h4 className={`font-bold ${color.text}`}>{mainTitle}</h4>
+                {subDetail && (
+                  <p className="text-xs text-p-on-surface-variant/70 mt-0.5">{subDetail}</p>
+                )}
+              </div>
               <button
                 onClick={() => onDelete(entry.id)}
-                className="text-p-on-surface-variant/30 hover:text-p-error text-xs ml-4 transition-colors opacity-0 group-hover:opacity-100"
+                className="text-p-on-surface-variant/30 hover:text-p-error text-xs ml-4 transition-colors opacity-0 group-hover:opacity-100 shrink-0"
                 title="Delete"
               >
                 ✕
               </button>
             </div>
-            <p className="text-xs text-p-on-surface-variant">
+            <p className="text-xs text-p-on-surface-variant mt-1">
               {startLabel} – {endLabel} · {duration}
             </p>
           </div>
