@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { getDailyInsights } from "@/lib/api";
 import { DailyInsights } from "@/types";
+import AppSidebar from "@/components/app/AppSidebar";
 
 type Day = "yesterday" | "today";
 
@@ -28,12 +29,6 @@ function formatMinutes(m: number): string {
   return `${h}h ${min}m`;
 }
 
-const sideNavLinks = [
-  { icon: "history_edu", label: "Journal", href: "/app" },
-  { icon: "analytics", label: "Insights", href: "/app/insights", active: true },
-  { icon: "category", label: "Categories", href: "/app/categories" },
-  { icon: "tune", label: "Settings", href: "#" },
-];
 
 const CAT_COLORS: Record<string, string> = {
   work: "#8B8FA8",
@@ -139,37 +134,7 @@ export default function InsightsPage() {
         </button>
       </header>
 
-      {/* Sidebar */}
-      <aside className="hidden lg:flex flex-col fixed left-0 top-0 h-full py-8 px-4 bg-p-surface-container-low w-64 z-40 mt-16">
-        <div className="flex flex-col gap-6 h-full">
-          <div className="px-4 py-2">
-            <h3 className="text-xl font-bold text-p-on-surface tracking-tight">Journal</h3>
-            <p className="text-xs text-p-on-surface-variant mt-1">The Digital Curator</p>
-          </div>
-          <nav className="flex flex-col gap-1 mt-4">
-            {sideNavLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                  link.active
-                    ? "text-p-on-surface font-semibold bg-p-surface-container-high"
-                    : "text-p-on-surface-variant hover:text-p-on-surface hover:bg-p-surface-container-high/50"
-                }`}
-              >
-                <span className="material-symbols-outlined text-[20px]">{link.icon}</span>
-                <span className="text-[0.875rem]">{link.label}</span>
-              </a>
-            ))}
-          </nav>
-          <div className="mt-auto">
-            <a href="#" className="flex items-center gap-3 px-4 py-3 text-p-on-surface-variant hover:text-p-on-surface transition-colors">
-              <span className="material-symbols-outlined">help_outline</span>
-              <span className="text-[0.875rem]">Support</span>
-            </a>
-          </div>
-        </div>
-      </aside>
+      <AppSidebar title="Insights" />
 
       {/* Main */}
       <main className="lg:pl-64 pt-16 min-h-screen">

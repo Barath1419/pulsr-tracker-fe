@@ -8,6 +8,7 @@ import DayTabs from "@/components/app/DayTabs";
 import AppInputBar from "@/components/app/AppInputBar";
 import AppTimeline from "@/components/app/AppTimeline";
 import DailySummary from "@/components/app/DailySummary";
+import AppSidebar from "@/components/app/AppSidebar";
 import ProjectSelector from "@/components/app/ProjectSelector";
 
 type Day = "yesterday" | "today" | "tomorrow";
@@ -35,13 +36,6 @@ function formatDisplayDate(d: Date): string {
   });
 }
 
-const sideNavLinks = [
-  { icon: "history_edu", label: "Journal", href: "/app", active: true },
-  { icon: "analytics", label: "Insights", href: "/app/insights" },
-  { icon: "category", label: "Categories", href: "/app/categories" },
-  { icon: "account_circle", label: "Profile", href: "/app/profile" },
-  { icon: "tune", label: "Settings", href: "#" },
-];
 
 export default function AppPage() {
   const router = useRouter();
@@ -155,42 +149,7 @@ export default function AppPage() {
         </div>
       </header>
 
-      {/* Left Sidebar (desktop) */}
-      <aside className="hidden lg:flex flex-col fixed left-0 top-0 h-full py-8 px-4 bg-p-surface-container-low w-64 z-40 mt-16">
-        <div className="flex flex-col gap-6 h-full">
-          <div className="px-4 py-2">
-            <h3 className="text-xl font-bold text-p-on-surface tracking-tight">Journal</h3>
-            <p className="text-xs text-p-on-surface-variant mt-1">The Digital Curator</p>
-          </div>
-
-          <nav className="flex flex-col gap-1 mt-4">
-            {sideNavLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 transition-colors ${
-                  link.active
-                    ? "text-p-primary font-semibold bg-p-surface-container-high"
-                    : "text-p-on-surface-variant hover:text-p-on-surface hover:bg-p-surface-container-high"
-                }`}
-              >
-                <span className="material-symbols-outlined">{link.icon}</span>
-                <span className="text-[0.875rem]">{link.label}</span>
-              </a>
-            ))}
-          </nav>
-
-          <div className="mt-auto">
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 text-p-on-surface-variant hover:text-p-on-surface transition-colors"
-            >
-              <span className="material-symbols-outlined">help_outline</span>
-              <span className="text-[0.875rem]">Support</span>
-            </a>
-          </div>
-        </div>
-      </aside>
+      <AppSidebar title="Journal" />
 
       {/* Main Content */}
       <main className="pt-24 lg:ml-64 px-6 md:px-12 pb-24">

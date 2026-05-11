@@ -8,6 +8,7 @@ import {
   createGoal, updateGoal, deleteGoal,
 } from "@/lib/api";
 import { UserProfile, Goal } from "@/types";
+import AppSidebar from "@/components/app/AppSidebar";
 
 function fmtTime(minutes: number): string {
   if (minutes <= 0) return "0m";
@@ -26,13 +27,6 @@ function formatDate(dateStr: string): string {
   }).toUpperCase();
 }
 
-const sideNavLinks = [
-  { icon: "history_edu", label: "Journal", href: "/app" },
-  { icon: "analytics", label: "Insights", href: "/app/insights" },
-  { icon: "category", label: "Categories", href: "/app/categories" },
-  { icon: "account_circle", label: "Profile", href: "/app/profile", active: true },
-  { icon: "tune", label: "Settings", href: "#" },
-];
 
 const PERIOD_COLORS: Record<string, string> = {
   daily: "bg-p-secondary-dim",
@@ -154,31 +148,7 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      {/* Sidebar */}
-      <aside className="hidden lg:flex flex-col fixed left-0 top-0 h-full py-8 px-4 bg-p-surface-container-low w-64 z-40 mt-16">
-        <div className="flex flex-col gap-6 h-full">
-          <div className="px-4 py-2">
-            <h3 className="text-xl font-bold text-p-on-surface tracking-tight">Profile</h3>
-            <p className="text-xs text-p-on-surface-variant mt-1">The Digital Curator</p>
-          </div>
-          <nav className="flex flex-col gap-1 mt-4">
-            {sideNavLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 transition-colors ${
-                  link.active
-                    ? "text-p-primary font-semibold bg-p-surface-container-high"
-                    : "text-p-on-surface-variant hover:text-p-on-surface hover:bg-p-surface-container-high"
-                }`}
-              >
-                <span className="material-symbols-outlined">{link.icon}</span>
-                <span className="text-[0.875rem]">{link.label}</span>
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </aside>
+      <AppSidebar title="Profile" />
 
       {/* Main */}
       <main className="pt-24 lg:ml-64 px-6 md:px-12 pb-32 max-w-5xl mx-auto space-y-16">
