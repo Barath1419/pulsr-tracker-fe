@@ -1,4 +1,4 @@
-import { Entry } from "@/types";
+import { Entry, Category } from "@/types";
 import AppTimelineEntry from "./AppTimelineEntry";
 import UntrackedGap from "./UntrackedGap";
 
@@ -6,6 +6,7 @@ interface Props {
   entries: Entry[];
   fetching: boolean;
   onDelete: (id: string) => void;
+  categories?: Category[];
 }
 
 function getMinutes(iso: string): number {
@@ -42,7 +43,20 @@ function buildTimeline(entries: Entry[]): TimelineItem[] {
   return items;
 }
 
-export default function AppTimeline({ entries, fetching, onDelete }: Props) {
+export default function AppTimeline({ entries, fetching, onDelete, categories = [] }: Props) {
+  const projectMap = new Map<string, string>();
+  const activityMap = new Map<string, string>();
+  for (const cat of categories) {
+    for (const proj of cat.projects) {
+      projectMap.set(proj.id, proj.name);
+      for (const act of proj.activities) {
+        activityMap.set(act.id, act.name);
+      }
+    }
+    for (const act of cat.activities ?? []) {
+      activityMap.set(act.id, act.name);
+    }
+  }
   if (fetching) {
     return (
       <div className="flex items-center justify-center py-24">
@@ -80,6 +94,8 @@ export default function AppTimeline({ entries, fetching, onDelete }: Props) {
             entry={item.entry}
             colorIndex={item.index}
             onDelete={onDelete}
+            projectName={item.entry.project_id ? projectMap.get(item.entry.project_id) ?? null : null}
+            activityName={item.entry.activity_id ? activityMap.get(item.entry.activity_id) ?? null : null}
           />
         ) : (
           <UntrackedGap key={`gap-${i}`} minutes={item.minutes} />

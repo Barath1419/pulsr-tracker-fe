@@ -222,6 +222,7 @@ export default function AppPage() {
               entries={entries}
               fetching={fetching}
               onDelete={handleDelete}
+              categories={categories}
             />
           </div>
 
