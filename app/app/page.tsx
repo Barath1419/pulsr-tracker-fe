@@ -48,7 +48,7 @@ export default function AppPage() {
   const [selectedDay, setSelectedDay] = useState<Day>("today");
   const [entries, setEntries] = useState<Entry[]>([]);
   const [fetching, setFetching] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [pendingData, setPendingData] = useState<{ start_time: string; end_time: string; title: string } | null>(null);
 
@@ -91,16 +91,30 @@ export default function AppPage() {
     activityId: string | null
   ) {
     setPendingData(null);
-    setLoading(true);
+
+    const tempId = `optimistic-${Date.now()}`;
+    const optimistic: Entry = {
+      id: tempId,
+      title: data.title,
+      start_time: data.start_time,
+      end_time: data.end_time,
+      project_id: projectId,
+      activity_id: activityId,
+      category: null,
+    };
+
+    setEntries((prev) =>
+      [...prev, optimistic].sort((a, b) => a.start_time.localeCompare(b.start_time))
+    );
+
     try {
       const entry = await createEntry({ ...data, project_id: projectId, activity_id: activityId });
       setEntries((prev) =>
-        [...prev, entry].sort((a, b) => a.start_time.localeCompare(b.start_time))
+        prev.map((e) => e.id === tempId ? entry : e)
       );
     } catch (err) {
+      setEntries((prev) => prev.filter((e) => e.id !== tempId));
       alert(err instanceof Error ? err.message : "Failed to create entry");
-    } finally {
-      setLoading(false);
     }
   }
 
