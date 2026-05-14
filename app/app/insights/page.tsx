@@ -107,36 +107,27 @@ export default function InsightsPage() {
 
   return (
     <div className="min-h-screen bg-p-surface text-p-on-surface">
-      {/* Header */}
-      <header className="fixed top-0 w-full flex justify-between items-center px-8 h-16 glass-panel z-50 shadow-[0_8px_30px_rgba(231,229,229,0.06)]">
-        <div className="flex items-center gap-8">
-          <span className="text-2xl font-black tracking-tighter text-p-on-surface">Pulsr</span>
-          {/* Yesterday / Today tabs */}
-          <div className="flex items-center gap-1 bg-p-surface-container-high rounded-full p-1">
-            {(["yesterday", "today"] as Day[]).map((d) => (
-              <button
-                key={d}
-                onClick={() => { setSelectedDay(d); setDaily(null); }}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold capitalize transition-all cursor-pointer ${
-                  selectedDay === d
-                    ? "bg-p-surface-bright text-p-on-surface"
-                    : "text-p-on-surface-variant hover:text-p-on-surface"
-                }`}
-              >
-                {d}
-              </button>
-            ))}
-          </div>
+      {/* Day selector sub-bar */}
+      <div className="fixed top-16 left-0 right-0 lg:left-64 z-40 flex items-center px-6 md:px-8 h-12 bg-p-surface/90 backdrop-blur-sm border-b border-p-outline-variant/10">
+        <div className="flex items-center gap-1 bg-p-surface-container-high rounded-full p-1">
+          {(["yesterday", "today"] as Day[]).map((d) => (
+            <button
+              key={d}
+              onClick={() => { setSelectedDay(d); setDaily(null); }}
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold capitalize transition-all cursor-pointer ${
+                selectedDay === d
+                  ? "bg-p-surface-bright text-p-on-surface"
+                  : "text-p-on-surface-variant hover:text-p-on-surface"
+              }`}
+            >
+              {d}
+            </button>
+          ))}
         </div>
-        <button className="material-symbols-outlined text-p-primary p-2 hover:bg-p-surface-bright rounded-full transition-all duration-200 active:scale-95">
-          account_circle
-        </button>
-      </header>
-
-
+      </div>
 
       {/* Main */}
-      <main className="lg:pl-64 pt-16 min-h-screen">
+      <main className="lg:pl-64 pt-32 min-h-screen">
         {loading ? (
           <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
             <p className="text-sm text-p-on-surface-variant animate-pulse">Loading...</p>

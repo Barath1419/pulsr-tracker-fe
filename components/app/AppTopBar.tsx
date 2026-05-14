@@ -42,7 +42,7 @@ export default function AppTopBar() {
       {/* Right side */}
       <div className="flex items-center gap-4">
         {/* Date display */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-p-surface-container-high rounded-full">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-p-surface-container-high rounded-full">
           <span className="material-symbols-outlined text-sm text-p-on-surface-variant">calendar_today</span>
           <span className="text-xs font-medium text-p-on-surface-variant">
             {formatDate(new Date())}

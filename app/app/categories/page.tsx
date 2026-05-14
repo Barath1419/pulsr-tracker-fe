@@ -414,18 +414,8 @@ export default function CategoriesPage() {
 
   return (
     <div className="min-h-screen bg-p-surface text-p-on-surface">
-      {/* Header */}
-      <header className="fixed top-0 w-full flex justify-between items-center px-8 h-16 glass-panel z-50 shadow-[0_8px_30px_rgba(231,229,229,0.06)]">
-        <span className="text-2xl font-black tracking-tighter text-p-on-surface">Pulsr</span>
-        <button className="material-symbols-outlined text-p-primary p-2 hover:bg-p-surface-bright rounded-full transition-all duration-200 active:scale-95">
-          account_circle
-        </button>
-      </header>
-
-
-
       {/* Main */}
-      <main className="lg:pl-64 pt-16 min-h-screen">
+      <main className="lg:pl-64 pt-20 min-h-screen">
         <div className="max-w-4xl mx-auto px-6 md:px-12 py-12">
 
           {/* Page header */}
