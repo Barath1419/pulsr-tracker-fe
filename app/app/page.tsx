@@ -128,12 +128,12 @@ export default function AppPage() {
   return (
     <div className="min-h-screen bg-p-surface text-p-on-surface">
       {/* Day selector bar — sits below shared top bar */}
-      <div className="fixed top-16 left-0 right-0 lg:left-64 z-40 flex items-center px-6 md:px-8 h-12 bg-p-surface/90 backdrop-blur-sm border-b border-p-outline-variant/10">
+      <div className="fixed top-16 left-0 right-0 lg:left-64 z-40 flex items-center px-6 md:px-8 py-4 bg-p-surface/90 backdrop-blur-sm border-b border-p-outline-variant/10">
         <DayTabs selected={selectedDay} onChange={handleDayChange} />
       </div>
 
       {/* Main Content */}
-      <main className="pt-32 lg:ml-64 px-6 md:px-12 pb-24">
+      <main className="pt-36 lg:ml-64 px-6 md:px-12 pb-24">
         <div className="max-w-4xl mx-auto mb-12 relative">
           <AppInputBar
             onParsed={handleParsed}
