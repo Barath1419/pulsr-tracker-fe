@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { getDailyInsights } from "@/lib/api";
 import { DailyInsights } from "@/types";
-import AppSidebar from "@/components/app/AppSidebar";
 
 type Day = "yesterday" | "today";
 
@@ -134,7 +133,7 @@ export default function InsightsPage() {
         </button>
       </header>
 
-      <AppSidebar title="Insights" />
+
 
       {/* Main */}
       <main className="lg:pl-64 pt-16 min-h-screen">

@@ -8,7 +8,6 @@ import {
   createActivity, updateActivity, deleteActivity,
 } from "@/lib/api";
 import { Category, ProjectInCategory, ActivityItem } from "@/types";
-import AppSidebar from "@/components/app/AppSidebar";
 
 
 // ─── Inline editable text ───────────────────────────────────────────────────
@@ -423,7 +422,7 @@ export default function CategoriesPage() {
         </button>
       </header>
 
-      <AppSidebar title="Categories" />
+
 
       {/* Main */}
       <main className="lg:pl-64 pt-16 min-h-screen">

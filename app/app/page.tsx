@@ -8,7 +8,6 @@ import DayTabs from "@/components/app/DayTabs";
 import AppInputBar from "@/components/app/AppInputBar";
 import AppTimeline from "@/components/app/AppTimeline";
 import DailySummary from "@/components/app/DailySummary";
-import AppSidebar from "@/components/app/AppSidebar";
 import ProjectSelector from "@/components/app/ProjectSelector";
 
 type Day = "yesterday" | "today" | "tomorrow";
@@ -149,7 +148,7 @@ export default function AppPage() {
         </div>
       </header>
 
-      <AppSidebar title="Journal" />
+
 
       {/* Main Content */}
       <main className="pt-24 lg:ml-64 px-6 md:px-12 pb-24">

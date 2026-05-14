@@ -8,7 +8,6 @@ import {
   createGoal, updateGoal, deleteGoal,
 } from "@/lib/api";
 import { UserProfile, Goal } from "@/types";
-import AppSidebar from "@/components/app/AppSidebar";
 
 function fmtTime(minutes: number): string {
   if (minutes <= 0) return "0m";
@@ -148,7 +147,7 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      <AppSidebar title="Profile" />
+
 
       {/* Main */}
       <main className="pt-24 lg:ml-64 px-6 md:px-12 pb-32 max-w-5xl mx-auto space-y-16">
