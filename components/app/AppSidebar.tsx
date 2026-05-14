@@ -10,10 +10,7 @@ const NAV_LINKS = [
   { icon: "analytics", label: "Insights", href: "/app/insights" },
 ];
 
-export default function AppSidebar({ title = "Pulsr", subtitle = "The Digital Curator" }: {
-  title?: string;
-  subtitle?: string;
-}) {
+export default function AppSidebar() {
   const pathname = usePathname();
 
   function isActive(href: string) {
@@ -22,14 +19,9 @@ export default function AppSidebar({ title = "Pulsr", subtitle = "The Digital Cu
   }
 
   return (
-    <aside className="hidden lg:flex flex-col fixed left-0 top-16 h-[calc(100vh-4rem)] py-8 px-4 bg-p-surface-container-low w-64 z-40">
+    <aside className="hidden lg:flex flex-col fixed left-0 top-16 h-[calc(100vh-4rem)] py-6 px-4 bg-p-surface-container-low w-64 z-40">
       <div className="flex flex-col gap-6 h-full">
-        <div className="px-4 py-2">
-          <h3 className="text-xl font-bold text-p-on-surface tracking-tight">{title}</h3>
-          <p className="text-xs text-p-on-surface-variant mt-1">{subtitle}</p>
-        </div>
-
-        <nav className="flex flex-col gap-1 mt-4">
+        <nav className="flex flex-col gap-1">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.label}

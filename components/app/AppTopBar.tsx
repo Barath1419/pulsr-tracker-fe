@@ -35,8 +35,8 @@ export default function AppTopBar() {
   const initials = displayName.slice(0, 2).toUpperCase();
 
   return (
-    <header className="fixed top-0 left-0 right-0 lg:left-64 z-50 h-16 flex items-center justify-between px-6 md:px-8 bg-p-surface-container-highest/80 backdrop-blur-xl border-b border-p-outline-variant/10">
-      {/* Logo */}
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-8 bg-p-surface-container-highest/80 backdrop-blur-xl border-b border-p-outline-variant/10">
+      {/* Logo — top-left corner */}
       <span className="text-xl font-black tracking-tighter text-p-on-surface">Pulsr</span>
 
       {/* Right side */}
