@@ -9,6 +9,7 @@ import AppInputBar from "@/components/app/AppInputBar";
 import AppTimeline from "@/components/app/AppTimeline";
 import DailySummary from "@/components/app/DailySummary";
 import ProjectSelector from "@/components/app/ProjectSelector";
+import { TimelineSkeleton } from "@/components/app/Skeleton";
 
 type Day = "yesterday" | "today" | "tomorrow";
 
@@ -126,32 +127,13 @@ export default function AppPage() {
 
   return (
     <div className="min-h-screen bg-p-surface text-p-on-surface">
-      {/* Top Header */}
-      <header className="fixed top-0 w-full flex justify-between items-center px-8 h-16 glass-panel z-50 shadow-[0_8px_30px_rgba(231,229,229,0.06)]">
-        <div className="flex items-center gap-8">
-          <span className="text-2xl font-black tracking-tighter text-p-on-surface">Pulsr</span>
-          <DayTabs selected={selectedDay} onChange={handleDayChange} />
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-p-surface-container-high rounded-full">
-            <span className="material-symbols-outlined text-sm text-p-on-surface-variant">
-              calendar_today
-            </span>
-            <span className="text-xs font-medium text-p-on-surface-variant">
-              {formatDisplayDate(selectedDate)}
-            </span>
-          </div>
-          <button className="material-symbols-outlined text-p-primary p-2 hover:bg-p-surface-bright rounded-full transition-all duration-200 active:scale-95">
-            settings
-          </button>
-        </div>
-      </header>
-
-
+      {/* Day selector bar — sits below shared top bar */}
+      <div className="fixed top-16 left-0 right-0 lg:left-64 z-40 flex items-center px-6 md:px-8 h-12 bg-p-surface/90 backdrop-blur-sm border-b border-p-outline-variant/10">
+        <DayTabs selected={selectedDay} onChange={handleDayChange} />
+      </div>
 
       {/* Main Content */}
-      <main className="pt-24 lg:ml-64 px-6 md:px-12 pb-24">
+      <main className="pt-32 lg:ml-64 px-6 md:px-12 pb-24">
         <div className="max-w-4xl mx-auto mb-12 relative">
           <AppInputBar
             onParsed={handleParsed}
@@ -176,12 +158,16 @@ export default function AppPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Timeline */}
           <div className="lg:col-span-8">
-            <AppTimeline
-              entries={entries}
-              fetching={fetching}
-              onDelete={handleDelete}
-              categories={categories}
-            />
+            {fetching && entries.length === 0 ? (
+              <TimelineSkeleton />
+            ) : (
+              <AppTimeline
+                entries={entries}
+                fetching={fetching}
+                onDelete={handleDelete}
+                categories={categories}
+              />
+            )}
           </div>
 
           {/* Right Sidebar */}

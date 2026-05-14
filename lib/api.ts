@@ -1,3 +1,5 @@
+import { withCache, setCache, invalidateCache, invalidateCachePrefix } from "@/lib/cache";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 function getToken(): string | null {
@@ -55,8 +57,11 @@ export async function login(email: string, password: string) {
 
 // Entries
 export async function getEntries(date?: string) {
-  const query = date ? `?date=${date}` : "";
-  return request<import("@/types").Entry[]>(`/entries${query}`);
+  const key = `entries:${date ?? "all"}`;
+  return withCache(key, () => {
+    const query = date ? `?date=${date}` : "";
+    return request<import("@/types").Entry[]>(`/entries${query}`);
+  }, 30_000);
 }
 
 export async function createEntry(data: {
@@ -67,37 +72,48 @@ export async function createEntry(data: {
   activity_id?: string | null;
   category?: string | null;
 }) {
-  return request<import("@/types").Entry>("/entries", {
+  const entry = await request<import("@/types").Entry>("/entries", {
     method: "POST",
     body: JSON.stringify(data),
   });
+  // Bust the cache for the affected date
+  const dateKey = data.start_time.slice(0, 10);
+  invalidateCache(`entries:${dateKey}`);
+  return entry;
 }
 
 export async function deleteEntry(id: string) {
-  return request(`/entries/${id}`, { method: "DELETE" });
+  await request(`/entries/${id}`, { method: "DELETE" });
+  // Bust all entry caches since we don't know the date here
+  invalidateCachePrefix("entries:");
 }
 
 // Categories
 export async function getCategories() {
-  return request<import("@/types").Category[]>("/categories");
+  return withCache("categories", () => request<import("@/types").Category[]>("/categories"), 5 * 60_000);
 }
 
 export async function createCategory(data: { name: string; type?: string }) {
-  return request<import("@/types").Category>("/categories", {
+  const result = await request<import("@/types").Category>("/categories", {
     method: "POST",
     body: JSON.stringify(data),
   });
+  invalidateCache("categories");
+  return result;
 }
 
 export async function updateCategory(id: string, data: { name?: string; type?: string }) {
-  return request<import("@/types").Category>(`/categories/${id}`, {
+  const result = await request<import("@/types").Category>(`/categories/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
   });
+  invalidateCache("categories");
+  return result;
 }
 
 export async function deleteCategory(id: string) {
-  return request(`/categories/${id}`, { method: "DELETE" });
+  await request(`/categories/${id}`, { method: "DELETE" });
+  invalidateCache("categories");
 }
 
 // Activities
@@ -174,17 +190,20 @@ export async function deleteProject(id: string) {
 
 // Profile
 export async function getProfile() {
-  return request<import("@/types").UserProfile>("/profile");
+  return withCache("profile", () => request<import("@/types").UserProfile>("/profile"), 5 * 60_000);
 }
 
 export async function updateProfile(data: { name?: string; avatar_url?: string }) {
-  return request<import("@/types").UserProfile>("/profile", {
+  const result = await request<import("@/types").UserProfile>("/profile", {
     method: "PATCH",
     body: JSON.stringify(data),
   });
+  setCache("profile", result);
+  return result;
 }
 
 export async function deleteAccount() {
+  invalidateCache("profile");
   return request("/profile", { method: "DELETE" });
 }
 

@@ -41,20 +41,15 @@ export default function AvatarPage() {
 
   return (
     <div className="lg:ml-64 min-h-screen flex flex-col">
-      {/* Top Bar */}
-      <header className="fixed top-0 left-0 right-0 lg:left-64 z-50 h-16 flex items-center justify-between px-8 bg-p-surface-container-highest/80 backdrop-blur-xl border-b border-p-outline-variant/10">
-        <span className="text-xl font-bold tracking-tighter text-p-on-surface">Pulsr</span>
-        <Link
-          href="/app/profile"
-          className="flex items-center gap-2 text-p-on-surface-variant hover:text-p-on-surface transition-colors text-sm"
-        >
-          <span className="material-symbols-outlined text-sm">arrow_back</span>
-          Back to Profile
-        </Link>
-      </header>
-
-      <main className="flex-1 flex flex-col items-center justify-center px-8 py-12 pt-28 w-full max-w-5xl mx-auto">
+      <main className="flex-1 flex flex-col items-center justify-center px-8 py-12 pt-24 w-full max-w-5xl mx-auto">
         <div className="text-center mb-12">
+          <Link
+            href="/app/profile"
+            className="inline-flex items-center gap-1.5 text-p-on-surface-variant hover:text-p-on-surface transition-colors text-sm mb-6"
+          >
+            <span className="material-symbols-outlined text-sm">arrow_back</span>
+            Back to Profile
+          </Link>
           <h1 className="text-4xl font-bold text-p-on-surface tracking-tight mb-3">Choose Your Avatar</h1>
           <p className="text-p-on-surface-variant text-lg">Pick a style that represents you</p>
         </div>

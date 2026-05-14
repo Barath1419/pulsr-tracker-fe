@@ -7,6 +7,8 @@ import {
   getProfile, updateProfile, deleteAccount,
   createGoal, updateGoal, deleteGoal,
 } from "@/lib/api";
+import { getCached } from "@/lib/cache";
+import { ProfileSkeleton } from "@/components/app/Skeleton";
 import { UserProfile, Goal } from "@/types";
 
 function fmtTime(minutes: number): string {
@@ -52,9 +54,18 @@ export default function ProfilePage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) { router.push("/login"); return; }
+
+    // Show stale cached data immediately — no Loading screen
+    const cached = getCached<UserProfile>("profile");
+    if (cached) {
+      setProfile(cached);
+      setNameInput(cached.name ?? "");
+      setLoading(false);
+    }
+
     getProfile()
       .then((p) => { setProfile(p); setNameInput(p.name ?? ""); })
-      .catch(() => { router.push("/login"); })
+      .catch(() => { if (!cached) router.push("/login"); })
       .finally(() => setLoading(false));
   }, [router]);
 
@@ -122,14 +133,7 @@ export default function ProfilePage() {
     router.push("/login");
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-p-surface flex items-center justify-center">
-        <span className="text-p-on-surface-variant text-sm">Loading...</span>
-      </div>
-    );
-  }
-
+  if (loading) return <ProfileSkeleton />;
   if (!profile) return null;
 
   const displayName = profile.name || profile.email.split("@")[0];
@@ -137,18 +141,6 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-p-surface text-p-on-surface">
-      {/* Top Bar */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-8 bg-p-surface/80 backdrop-blur-xl border-b border-p-outline-variant/10 lg:pl-72">
-        <span className="font-bold text-lg tracking-tight text-p-on-surface">Pulsr</span>
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-p-surface-container-high flex items-center justify-center text-xs font-bold text-p-on-surface">
-            {initials}
-          </div>
-        </div>
-      </header>
-
-
-
       {/* Main */}
       <main className="pt-24 lg:ml-64 px-6 md:px-12 pb-32 max-w-5xl mx-auto space-y-16">
 
